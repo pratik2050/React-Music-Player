@@ -1,11 +1,19 @@
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import { Searchbar, Sidebar, MusicPlayer, TopPlay } from './components';
 import { ArtistDetails, TopArtists, AroundYou, Discover, Search, SongDetails, TopCharts } from './pages';
 
 const App = () => {
   const { activeSong } = useSelector((state) => state.player);
+  const [isDisplayed, setIsDisplayed] = useState(false);
+
+  useEffect(() => {
+    setInterval(() => {
+      setIsDisplayed(true);
+    }, 3500);
+  }, []);
 
   return (
     <div className="relative flex">
@@ -17,16 +25,16 @@ const App = () => {
           <div className="flex-1 h-fit pb-40">
             <Routes>
               <Route path="/" element={<Discover />} />
-              <Route path="/top-artists" element={<TopArtists />} />
-              <Route path="/top-charts" element={<TopCharts />} />
-              <Route path="/around-you" element={<AroundYou />} />
-              <Route path="/artists/:id" element={<ArtistDetails />} />
-              <Route path="/songs/:songid" element={<SongDetails />} />
-              <Route path="/search/:searchTerm" element={<Search />} />
+              <Route path="/top-artists" element={isDisplayed && <TopArtists />} />
+              <Route path="/top-charts" element={isDisplayed && <TopCharts />} />
+              <Route path="/around-you" element={isDisplayed && <AroundYou />} />
+              <Route path="/artists/:id" element={isDisplayed && <ArtistDetails />} />
+              <Route path="/songs/:songid" element={isDisplayed && <SongDetails />} />
+              <Route path="/search/:searchTerm" element={isDisplayed && <Search />} />
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
-            <TopPlay />
+            {isDisplayed && <TopPlay />}
           </div>
         </div>
       </div>

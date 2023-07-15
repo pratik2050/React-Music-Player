@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const shazamCoreApi = createApi({
     reducerPath: 'shazamCoreApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://shaadfvadvzam.p.rapidapi.com',
+        baseUrl: 'https://shazam.p.rapidapi.com',
         prepareHeaders: (headers) => {
             headers.set('X-RapidAPI-Key', 'af5e87187emsheedca087f36adc4p17c14ejsnecdf450bffdb');
 
@@ -12,10 +12,12 @@ export const shazamCoreApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getTopCharts: builder.query({ query: () => '/charts/track' })
+        getTopCharts: builder.query({ query: () => '/charts/track' }),
+        getSongDetails: builder.query({ query: ({ songid }) => `/songs/get-details?track_id=${songid}` }),
     }),
 });
 
 export const {
     useGetTopChartsQuery,
+    useGetSongDetailsQuery,
 } = shazamCoreApi;
