@@ -12,7 +12,7 @@ const App = () => {
   useEffect(() => {
     setInterval(() => {
       setIsDisplayed(true);
-    }, 3500);
+    }, 4000);
   }, []);
 
   return (
