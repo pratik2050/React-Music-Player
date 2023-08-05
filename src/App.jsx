@@ -2,8 +2,9 @@ import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { Searchbar, Sidebar, MusicPlayer, TopPlay } from './components';
+import { Searchbar, Sidebar, MusicPlayer, TopPlay, Error } from './components';
 import { ArtistDetails, TopArtists, AroundYou, Discover, Search, SongDetails, TopCharts } from './pages';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const App = () => {
   const { activeSong } = useSelector((state) => state.player);
@@ -16,7 +17,8 @@ const App = () => {
   }, []);
 
   return (
-    <div className="relative flex">
+    <ErrorBoundary fallback={<div><center><strong>This is a Free API, may go down sometimes. Plz Reload again</strong></center></div>}>
+      <div className="relative flex">
       <Sidebar />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#121286]">
         <Searchbar />
@@ -45,6 +47,7 @@ const App = () => {
         </div>
       )}
     </div>
+    </ErrorBoundary>
   );
 };
 
